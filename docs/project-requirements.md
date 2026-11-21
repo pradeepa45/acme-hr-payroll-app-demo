@@ -39,11 +39,13 @@ The web application will provide an HR manager with a centralized interface to v
 
 ## Compensation Insights
 
-- Compare salaries across departments and countries
-- View salary distributions and ranges
-- Filter analytics
-- Display and analyse compensation in the employee's respective currency
-- Provide department and country comparisons within the same currency where applicable
+- View organization-wide compensation metrics, including total payroll, average salary, median salary, and salary ranges.
+- View and analyze salary distributions across the organization using salary ranges and employee counts.
+- Compare compensation across departments and job roles using metrics such as average, median, minimum, and maximum salary.
+- Explore compensation by country and currency.
+- Filter compensation insights by department, country, job role, and employment status where applicable.
+- Identify compensation patterns and differences across organizational groups to support HR decision-making.
+- Ensure compensation comparisons are performed within the same currency and avoid misleading cross-currency aggregations without conversion.
 
 # What is being left out deliberately
 
