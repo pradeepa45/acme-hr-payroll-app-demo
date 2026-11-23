@@ -1,0 +1,36 @@
+erDiagram
+    DEPARTMENT ||--o{ EMPLOYEE : contains
+    EMPLOYEE ||--o{ SALARY_HISTORY : has
+
+    DEPARTMENT {
+        int id PK
+        string name UK
+    }
+
+    EMPLOYEE {
+        int id PK
+        int departmentId FK
+        string employeeCode UK
+        string personalEmail "nullable"
+        string workEmail UK "nullable"
+        string fullName
+        string jobTitle
+        string country
+        string currency
+        int currentSalaryMinorUnits
+        string employmentStatus
+        date joiningDate
+        datetime createdAt
+        datetime updatedAt
+    }
+
+    SALARY_HISTORY {
+        int id PK
+        int employeeId FK
+        int previousSalaryMinorUnits
+        int revisedSalaryMinorUnits
+        date effectiveDate
+        string reason
+    }
+
+%% Database constraint: SALARY_HISTORY has UNIQUE(employeeId, effectiveDate).

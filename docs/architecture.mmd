@@ -1,0 +1,16 @@
+flowchart TD
+    HR[HR Manager] --> UI[React + TypeScript HR Web App]
+    UI -->|HTTP JSON requests| API[Express REST API]
+
+    API --> ROUTES[Routes and Request Validation]
+    ROUTES --> SERVICES[Employee, Salary and Analytics Services]
+    SERVICES --> REPO[SQLite Data Access Layer]
+    REPO --> DB[(SQLite Database)]
+
+    SEED[Deterministic Synthetic Data Seeder] --> DB
+
+    DB --> REPO
+    REPO --> SERVICES
+    SERVICES --> API
+    API -->|Employee details and salary history| UI
+    UI --> UPCOMING[Derive upcoming status from effectiveDate later than today, no employee flag stored]

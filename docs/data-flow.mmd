@@ -1,0 +1,55 @@
+flowchart TD
+A[HR submits salary revision] --> B[Validate salary, date and reason]
+B --> C{Input valid?}
+C -->|No| D[Return validation errors]
+C -->|Yes| E[Load employee and salary history]
+E --> F{Employee exists?}
+F -->|No| G[Return not found]
+F -->|Yes| H{Create or edit upcoming revision?}
+
+H -->|Create| I[Check upcoming revision count]
+I --> J{Less than 2 upcoming?}
+J -->|No| K[Reject creation]
+J -->|Yes| L[Check effective date conflict]
+
+L --> M{Date already exists?}
+M -->|Yes| N[Reject duplicate date]
+M -->|No| O[Begin transaction and insert revision]
+
+H -->|Edit| P[Load existing revision]
+P --> Q{Revision is upcoming?}
+Q -->|No| R[Reject edit]
+Q -->|Yes| S[Validate updated effective date]
+S --> T{Date is today or later?}
+T -->|No| U[Reject edit]
+T -->|Yes| V[Check date conflict]
+V --> W{Conflict with another revision?}
+W -->|Yes| X[Reject edit]
+W -->|No| Y[Begin transaction and update existing revision]
+
+O --> Z{Effective date is today?}
+Y --> Z
+Z -->|Yes| AA[Update employee current salary]
+Z -->|No| AB[Leave current salary unchanged]
+AA --> AC[Commit transaction]
+AB --> AC
+AC --> AD[Return success]
+
+O -->|Failure| AE[Rollback]
+Y -->|Failure| AE
+
+subgraph Employee Creation
+BA[HR submits employee details and initial salary] --> BB[Validate fields]
+BB --> BC[Begin transaction]
+BC --> BD[Insert employee]
+BD --> BE[Insert initial salary history using joining date]
+BE --> BF{Both writes successful?}
+BF -->|No| BG[Rollback transaction]
+BF -->|Yes| BH[Commit transaction]
+end
+
+subgraph Upcoming Revisions
+BI[Load salary history] --> BJ[Identify upcoming revisions by effective date]
+BJ --> BK[Sort revisions by effective date]
+BK --> BL[Display upcoming revisions in HR interface]
+end
